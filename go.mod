@@ -1,6 +1,6 @@
-module github.com/pariz/gountries
+module github.com/Dbone29/gountries
 
-go 1.17
+go 1.21
 
 require (
 	github.com/stretchr/testify v1.7.0

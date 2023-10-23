@@ -3,6 +3,7 @@ package gountries
 import (
 	"fmt"
 	"io/ioutil"
+	"os"
 	"path"
 	"path/filepath"
 	"strings"
@@ -82,13 +83,13 @@ func populateCountries(dataPath string) map[string]Country {
 		return populateCountriesFromPackedData(yamlFileList, "data/yaml/countries")
 	}
 
-	if info, err := ioutil.ReadDir(countriesPath); err == nil {
+	if info, err := os.ReadDir(countriesPath); err == nil {
 
 		var file []byte
 
 		for _, v := range info {
 			if !v.IsDir() {
-				if file, err = ioutil.ReadFile(filepath.Join(countriesPath, v.Name())); err == nil {
+				if file, err = os.ReadFile(filepath.Join(countriesPath, v.Name())); err == nil {
 
 					country := Country{}
 					if err = yaml.Unmarshal(file, &country); err == nil {
@@ -101,7 +102,7 @@ func populateCountries(dataPath string) map[string]Country {
 		}
 
 	} else {
-		panic(fmt.Errorf("Error loading Countries: %s", err))
+		panic(fmt.Errorf("error loading Countries: %s", err))
 	}
 	return countries
 }

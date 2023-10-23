@@ -95,7 +95,7 @@ func (q Query) FindCountries(c Country) (countries []Country) {
 		// Name
 		//
 
-		if c.Name.Common != "" && strings.ToLower(c.Name.Common) == strings.ToLower(country.Name.Common) {
+		if c.Name.Common != "" && strings.EqualFold(c.Name.Common, country.Name.Common) {
 			continue
 		}
 
@@ -113,22 +113,22 @@ func (q Query) FindCountries(c Country) (countries []Country) {
 		// Geo
 		//
 
-		if c.Geo.Continent != "" && strings.ToLower(c.Geo.Continent) != strings.ToLower(country.Geo.Continent) {
+		if c.Geo.Continent != "" && !strings.EqualFold(c.Geo.Continent, country.Geo.Continent) {
 			continue
 		}
 
-		if c.Geo.Region != "" && strings.ToLower(c.Geo.Region) != strings.ToLower(country.Geo.Region) {
+		if c.Geo.Region != "" && !strings.EqualFold(c.Geo.Region, country.Geo.Region) {
 			continue
 		}
 
-		if c.Geo.SubRegion != "" && strings.ToLower(c.Geo.SubRegion) != strings.ToLower(country.Geo.SubRegion) {
+		if c.Geo.SubRegion != "" && !strings.EqualFold(c.Geo.SubRegion, country.Geo.SubRegion) {
 			continue
 		}
 
 		// Misc
 		//
 
-		if c.InternationalPrefix != "" && strings.ToLower(c.InternationalPrefix) != strings.ToLower(country.InternationalPrefix) {
+		if c.InternationalPrefix != "" && !strings.EqualFold(c.InternationalPrefix, country.InternationalPrefix) {
 			continue
 		}
 
@@ -146,12 +146,12 @@ func (q Query) FindCountries(c Country) (countries []Country) {
 				for _, c2 := range country.BorderingCountries() {
 					match = c1.Alpha2 == c2.Alpha2
 
-					if match == true {
+					if match {
 						break
 					}
 				}
 
-				if match == true {
+				if match {
 					allMatch = true
 				} else {
 					allMatch = false
@@ -160,7 +160,7 @@ func (q Query) FindCountries(c Country) (countries []Country) {
 
 			}
 
-			if allMatch == false {
+			if !allMatch {
 				continue
 			}
 
